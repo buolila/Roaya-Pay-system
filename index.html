@@ -202,7 +202,7 @@
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card p-4 stat-card border-primary">
+                    <div class="card p-4 stat-card border-primary" id="total-sales">
                         <small class="text-muted fw-bold">إجمالي المبيعات (تجريبي)</small>
                         <h2 class="fw-bold text-primary mt-2">15,400.00 ج.م</h2>
                     </div>
@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card p-4 stat-card" style="border-right-color: #ffc107;">
+                    <div class="card p-4 stat-card" style="border-right-color: #ffc107;" id="today-count">
                         <small class="text-muted fw-bold">عمليات اليوم</small>
                         <h2 class="fw-bold text-warning mt-2">8 عمليات</h2>
                     </div>
@@ -235,6 +235,7 @@
                                 <th>التاريخ</th>
                             </tr>
                         </thead>
+                        <tbody id="transactions-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -285,24 +286,26 @@
             </div>
         </div>
 
-  <div id="developers" class="tab-content">
-            <h2 class="fw-bold mb-4">بوابة المطورين</h2>
-                <div class="col-md-4">
-                    <div class="card developer-card shadow-sm h-100">
-                        <img src="0000000.png" alt="Eng Mohamed Wael" class="dev-img mx-auto">
-                        <h4 class="fw-bold mb-1">Eng / Mohamed Wael</h4>
-                        <p class="text-muted mb-3 small">Android Developer</p>
-                        <div class="social-links">
-                            <a href="mailto:dev@roayapay.com" class="bg-email"><i class="fas fa-envelope"></i></a>
-                            <a href="#" class="bg-linkedin"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="bg-facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="bg-github"><i class="fab fa-github"></i></a>
-                            <a href="https://wa.me/20123456789" class="bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
-                        </div>
-                    </div>
+<div id="developers" class="tab-content">
+    <h2 class="fw-bold mb-4">بوابة المطورين</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card developer-card shadow-sm h-100">
+                <img src="0000000.png" class="dev-img mx-auto">
+                <h4 class="fw-bold mb-1">Eng / Mohamed Wael</h4>
+                <p class="text-muted mb-3 small">Android Developer</p>
+                <div class="social-links">
+                    <a href="mailto:dev@roayapay.com" class="bg-email"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="bg-linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="bg-facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="bg-github"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/20123456789" class="bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
         <div id="inventory" class="tab-content position-relative">
             <div class="lock-overlay">
@@ -387,46 +390,60 @@
             if (link) link.classList.add('active');
         }
 
-        function processFakePayment(btn) {
-            const nameInput = document.getElementById('pay-name');
-            const amountInput = document.getElementById('pay-amount');
+       function processFakePayment(btn) {
+    const nameInput = document.getElementById('pay-name');
+    const amountInput = document.getElementById('pay-amount');
 
-            if (nameInput.value === "" || amountInput.value === "") {
-                alert("يرجى إدخال اسم العميل والمبلغ");
-                return;
-            }
+    if (nameInput.value === "" || amountInput.value === "") {
+        alert("يرجى إدخال اسم العميل والمبلغ");
+        return;
+    }
 
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> جاري المعالجة...';
-            btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> جاري المعالجة...';
+    btn.disabled = true;
 
-            setTimeout(() => {
-                const amount = parseFloat(amountInput.value);
-                const name = nameInput.value;
+    setTimeout(() => {
+        const amount = parseFloat(amountInput.value);
+        const name = nameInput.value;
 
-                sales += amount;
-                count += 1;
-                document.getElementById('today-count').innerText = count + " عمليات";
+        sales += amount;
+        count += 1;
 
-                const list = document.getElementById('transactions-list');
-                const trxId = Math.floor(Math.random() * 900000) + 100000;
-                const date = new Date().toLocaleDateString('ar-EG');
+        // ✔️ تحديث المبيعات
+        document.getElementById('total-sales').innerText =
+            sales.toLocaleString() + " ج.م";
 
-                const newRow = `<tr>
+        // ✔️ تحديث عدد العمليات
+        document.getElementById('today-count').innerText =
+            count + " عمليات";
+
+        // ✔️ إضافة العملية للجدول
+        const list = document.getElementById('transactions-list');
+
+        const trxId = Math.floor(Math.random() * 900000) + 100000;
+        const date = new Date().toLocaleDateString('ar-EG');
+
+        const newRow = `
+        <tr>
             <td>#${trxId}</td>
             <td>${name}</td>
             <td>${amount.toLocaleString()} ج.م</td>
-            <td><span class="badge bg-success-subtle text-success rounded-pill px-3">ناجحة</span></td>
+            <td><span class="badge bg-success">ناجحة</span></td>
             <td>${date}</td>
-        </tr>`;
-                list.insertAdjacentHTML('afterbegin', newRow);
+        </tr>
+        `;
 
-                document.getElementById('paymentFormContainer').classList.add('d-none');
-                document.getElementById('paymentSuccess').classList.remove('d-none');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }, 1500);
-        }
+        list.insertAdjacentHTML('afterbegin', newRow);
+
+        document.getElementById('paymentFormContainer').classList.add('d-none');
+        document.getElementById('paymentSuccess').classList.remove('d-none');
+
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+
+    }, 1500);
+}
 
         function resetPaymentModal() {
             setTimeout(() => {
