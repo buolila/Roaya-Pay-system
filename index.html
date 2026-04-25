@@ -13,91 +13,47 @@
     <style>
         :root {
             --main-bg: #f0f2f5;
-            --glass-bg: rgba(255, 255, 255, 0.85);
             --primary-gradient: linear-gradient(135deg, #1e3799 0%, #0984e3 100%);
             --accent-color: #ffa801;
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background: var(--main-bg); 
-            color: #2d3436;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Cairo', sans-serif; background: var(--main-bg); color: #2d3436; overflow-x: hidden; }
 
-        /* واجهة الدخول الزجاجية */
+        /* Login Screen */
         #login-screen {
             position: fixed; inset: 0; 
             background: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop') center/cover;
             z-index: 9999; display: flex; align-items: center; justify-content: center;
         }
         .login-glass {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px; padding: 50px; width: 90%; max-width: 450px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-            color: white; text-align: center;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 30px; padding: 50px;
+            width: 90%; max-width: 450px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); color: white; text-align: center;
         }
 
-        /* Sidebar الاحترافي */
+        /* Sidebar */
         .sidebar {
-            background: #ffffff; width: 280px; min-height: 100vh;
-            position: fixed; right: 0; top: 0; z-index: 1000;
-            display: none; box-shadow: -5px 0 20px rgba(0,0,0,0.03);
+            background: #ffffff; width: 280px; min-height: 100vh; position: fixed; right: 0; top: 0;
+            z-index: 1000; display: none; box-shadow: -5px 0 20px rgba(0,0,0,0.03);
         }
         .sidebar-brand { padding: 40px 30px; font-weight: 900; font-size: 1.5rem; color: #1e3799; }
-        .nav-link {
-            padding: 15px 30px; margin: 5px 15px; border-radius: 15px;
-            color: #636e72; font-weight: 600; transition: 0.4s;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: var(--primary-gradient); color: white !important;
-            box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);
-        }
+        .nav-link { padding: 15px 30px; margin: 5px 15px; border-radius: 15px; color: #636e72; font-weight: 600; transition: 0.4s; cursor: pointer; }
+        .nav-link:hover, .nav-link.active { background: var(--primary-gradient); color: white !important; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3); }
 
-        /* المحتوى الرئيسي */
+        /* Main Content */
         main { margin-right: 280px; padding: 50px; display: none; }
-        .main-full { margin-right: 0 !important; }
-
-        /* كروت الإحصائيات (Voucher Style) */
-        .premium-card {
-            border: none; border-radius: 25px; padding: 35px;
-            color: white; position: relative; overflow: hidden;
-            transition: 0.4s; height: 100%;
-        }
-        .premium-card:hover { transform: translateY(-10px); }
+        .premium-card { border: none; border-radius: 25px; padding: 35px; color: white; position: relative; overflow: hidden; transition: 0.4s; height: 100%; }
         .card-blue { background: linear-gradient(135deg, #1e3799 0%, #0984e3 100%); }
         .card-orange { background: linear-gradient(135deg, #f0932b 0%, #ed4c67 100%); }
-        
-        .card-icon {
-            position: absolute; left: -20px; bottom: -20px;
-            font-size: 8rem; opacity: 0.15;
-        }
+        .card-icon { position: absolute; left: -20px; bottom: -20px; font-size: 8rem; opacity: 0.15; }
 
-        /* جدول العمليات */
-        .custom-table {
-            background: white; border-radius: 25px; overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-        .table thead { background: #f8f9fa; border-bottom: 2px solid #eee; }
-        .table td { vertical-align: middle; padding: 20px; }
-
-        /* كارت المطور */
-        .dev-profile {
-            background: white; border-radius: 30px; padding: 30px;
-            box-shadow: var(--card-shadow); text-align: center;
-        }
-        .dev-img {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 5px solid #f0f2f5; margin-bottom: 20px;
-        }
-        .social-btn {
-            width: 45px; height: 45px; display: inline-flex;
-            align-items: center; justify-content: center;
-            border-radius: 12px; margin: 0 5px; color: white; text-decoration: none;
-        }
+        /* Developer Card */
+        .developer-card { background: white; border-radius: 30px; padding: 35px; text-align: center; box-shadow: var(--card-shadow); border: none; transition: 0.3s; }
+        .developer-card:hover { transform: translateY(-10px); }
+        .dev-img { width: 120px; height: 120px; border-radius: 30px; border: 4px solid #f8f9fa; margin-bottom: 20px; object-fit: cover; }
+        .social-links a { width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; color: white; margin: 0 5px; text-decoration: none; transition: 0.3s; }
+        .social-links a:hover { transform: scale(1.1) rotate(5deg); }
 
         .tab-content { display: none; animation: fadeIn 0.6s ease; }
         .tab-content.active { display: block; }
@@ -111,14 +67,10 @@
         <div class="login-glass">
             <h1 class="fw-black mb-1">ROAYA <span style="color: var(--accent-color);">PRO</span></h1>
             <p class="opacity-75 mb-4">نظام الإدارة والخدمات الذكي</p>
-            <div class="mb-3">
-                <input type="text" id="username" class="form-control form-control-lg border-0 bg-white" placeholder="اسم المستخدم">
-            </div>
-            <div class="mb-4">
-                <input type="password" id="password" class="form-control form-control-lg border-0 bg-white" placeholder="كلمة المرور">
-            </div>
+            <input type="text" id="username" class="form-control form-control-lg border-0 mb-3 bg-white" placeholder="اسم المستخدم">
+            <input type="password" id="password" class="form-control form-control-lg border-0 mb-4 bg-white" placeholder="كلمة المرور">
             <button class="btn btn-warning w-100 py-3 fw-bold rounded-pill shadow-lg" onclick="handleLogin()">دخول النظام</button>
-            <p id="error-msg" class="text-danger mt-3 d-none">تأكد من البيانات (admin/123) أو (user/000)</p>
+            <p id="error-msg" class="text-danger mt-3 d-none">بيانات الدخول غير صحيحة!</p>
         </div>
     </div>
 
@@ -128,8 +80,8 @@
             <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-th-large ms-3"></i> الإحصائيات</a>
             <a onclick="showTab('pay-form')" class="nav-link"><i class="fas fa-wallet ms-3"></i> دفع جديد</a>
             <a onclick="showTab('history')" id="admin-link-1" class="nav-link"><i class="fas fa-list-ul ms-3"></i> سجل العمليات</a>
-            <a onclick="showTab('dev')" class="nav-link"><i class="fas fa-code-branch ms-3"></i> المطور</a>
-            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-power-off ms-3"></i> تسجيل الخروج</a>
+            <a onclick="showTab('dev')" class="nav-link"><i class="fas fa-code ms-3"></i> المطور</a>
+            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-power-off ms-3"></i> خروج</a>
         </div>
     </div>
 
@@ -139,59 +91,44 @@
                 <h2 class="fw-bold">نظرة عامة على النشاط</h2>
                 <span id="role-badge" class="badge bg-primary px-4 py-2 rounded-pill"></span>
             </div>
-            
-            <div class="row g-4 mb-5" id="admin-stats">
+            <div class="row g-4" id="admin-stats">
                 <div class="col-md-6">
                     <div class="premium-card card-blue">
                         <i class="fas fa-chart-pie card-icon"></i>
-                        <h5 class="opacity-75">إجمالي المبالغ الحقيقية</h5>
-                        <h1 class="display-4 fw-bold mb-0" id="total-val">0 ج.م</h1>
+                        <h5>إجمالي المبالغ الحقيقية</h5>
+                        <h1 class="display-4 fw-bold" id="total-val">0 ج.م</h1>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="premium-card card-orange">
                         <i class="fas fa-fingerprint card-icon"></i>
-                        <h5 class="opacity-75">المعاملات المنجزة</h5>
-                        <h1 class="display-4 fw-bold mb-0" id="total-count">0</h1>
+                        <h5>المعاملات المنجزة</h5>
+                        <h1 class="display-4 fw-bold" id="total-count">0</h1>
                     </div>
                 </div>
             </div>
-
-            <div id="user-welcome" class="d-none">
-                <div class="p-5 bg-white rounded-5 shadow-sm border text-center">
-                    <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
-                    <h3>مرحباً بك في بوابتك الخاصة</h3>
-                    <p class="text-muted">يمكنك الآن البدء في تنفيذ عمليات دفع آمنة وسريعة.</p>
-                    <button class="btn btn-primary rounded-pill px-5" onclick="showTab('pay-form')">ابدأ عملية دفع</button>
-                </div>
+            <div id="user-welcome" class="d-none text-center p-5 bg-white rounded-5 shadow-sm">
+                <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
+                <h3>مرحباً بك في بوابتك الخاصة</h3>
+                <button class="btn btn-primary rounded-pill mt-3" onclick="showTab('pay-form')">ابدأ عملية دفع</button>
             </div>
         </div>
 
         <div id="pay-form" class="tab-content">
             <h2 class="fw-bold mb-4">تنفيذ معاملة جديدة</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="p-5 bg-white rounded-5 shadow-sm">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">اسم العميل بالكامل</label>
-                            <input type="text" id="c-name" class="form-control form-control-lg bg-light border-0">
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">المبلغ المطلوب (ج.م)</label>
-                            <input type="number" id="c-amount" class="form-control form-control-lg bg-light border-0">
-                        </div>
-                        <button class="btn btn-primary w-100 py-3 rounded-pill fw-bold" onclick="processNow()">تأكيد وإرسال المعاملة</button>
-                    </div>
-                </div>
+            <div class="card p-5 border-0 shadow-sm rounded-5" style="max-width: 500px;">
+                <input type="text" id="c-name" class="form-control mb-3 py-2 bg-light" placeholder="اسم العميل">
+                <input type="number" id="c-amount" class="form-control mb-4 py-2 bg-light" placeholder="المبلغ">
+                <button class="btn btn-primary w-100 py-3 rounded-pill" onclick="processNow()">تأكيد العملية</button>
             </div>
         </div>
 
         <div id="history" class="tab-content">
             <h2 class="fw-bold mb-4">الأرشيف المالي</h2>
-            <div class="custom-table table-responsive">
-                <table class="table table-hover mb-0 text-center">
-                    <thead>
-                        <tr><th>الرقم</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr>
+            <div class="card border-0 shadow-sm rounded-5 overflow-hidden">
+                <table class="table table-hover text-center mb-0">
+                    <thead class="bg-light">
+                        <tr><th>#</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th></tr>
                     </thead>
                     <tbody id="trx-body"></tbody>
                 </table>
@@ -199,25 +136,13 @@
         </div>
 
         <div id="dev" class="tab-content">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="dev-profile">
-                        <h2 class="fw-bold mb-4">بوابة المطورين</h2>
-          <div id="developers" class="tab-content">
             <h2 class="fw-bold mb-4">بوابة المطورين</h2>
-            <div class="col-md-4">
-             <div id="developers" class="tab-content">
-            <h2 class="fw-bold mb-4">مطور النظام</h2>
             <div class="row">
-                <div class="col-md-4">
-             <div id="developers" class="tab-content">
-            <h2 class="fw-bold mb-4">مطور النظام</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card developer-card shadow-sm">
-                        <img src="0000000.png" class="dev-img mx-auto">
+                <div class="col-md-5">
+                    <div class="card developer-card">
+                        <img src="https://i.ibb.co/h7nrySj/user.png" class="dev-img" alt="Avatar">
                         <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
-                        <p class="text-muted small mb-3">Front-End & Flutter Developer</p>
+                        <p class="text-primary fw-bold mb-3">Front-End & Flutter Developer</p>
                         <div class="social-links">
                             <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
                             <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
@@ -236,21 +161,16 @@
         function handleLogin() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            const err = document.getElementById('error-msg');
-
             if (u === "admin" && p === "123") initUI(true);
             else if (u === "user" && p === "000") initUI(false);
-            else err.classList.remove('d-none');
+            else document.getElementById('error-msg').classList.remove('d-none');
         }
 
         function initUI(isAdmin) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-sidebar').style.display = 'block';
             document.getElementById('main-content').style.display = 'block';
-            
-            const badge = document.getElementById('role-badge');
-            badge.innerText = isAdmin ? "إدارة كاملة" : "حساب مستخدم";
-
+            document.getElementById('role-badge').innerText = isAdmin ? "إدارة كاملة" : "حساب مستخدم";
             if (!isAdmin) {
                 document.getElementById('admin-stats').classList.add('d-none');
                 document.getElementById('admin-link-1').classList.add('d-none');
@@ -262,12 +182,10 @@
         function processNow() {
             const n = document.getElementById('c-name').value;
             const a = document.getElementById('c-amount').value;
-            if(!n || !a) return alert("يرجى ملء البيانات");
-
-            db.push({ name: n, amount: parseFloat(a), date: new Date().toLocaleString('ar-EG'), id: Date.now() });
+            if(!n || !a) return alert("اكمل البيانات");
+            db.push({ name: n, amount: parseFloat(a), date: new Date().toLocaleString('ar-EG') });
             localStorage.setItem('roaya_pro_db', JSON.stringify(db));
-            
-            alert("✅ تمت المعاملة بنجاح وحفظها في النظام.");
+            alert("✅ تم الحفظ");
             document.getElementById('c-name').value = '';
             document.getElementById('c-amount').value = '';
             refreshData();
@@ -277,21 +195,11 @@
             let total = 0;
             const body = document.getElementById('trx-body');
             body.innerHTML = '';
-
             db.forEach((item, index) => {
                 total += item.amount;
-                body.innerHTML += `
-                    <tr>
-                        <td class="fw-bold text-muted">#${index + 1}</td>
-                        <td class="fw-bold">${item.name}</td>
-                        <td class="text-primary fw-bold">${item.amount} ج.م</td>
-                        <td class="small">${item.date}</td>
-                        <td><span class="badge bg-success rounded-pill px-3">مكتملة</span></td>
-                    </tr>
-                `;
+                body.innerHTML += `<tr><td>${index+1}</td><td class="fw-bold">${item.name}</td><td class="text-primary">${item.amount} ج.م</td><td>${item.date}</td></tr>`;
             });
-
-            document.getElementById('total-val').innerText = total.toLocaleString() + " ج.م";
+            document.getElementById('total-val').innerText = total + " ج.م";
             document.getElementById('total-count').innerText = db.length;
         }
 
