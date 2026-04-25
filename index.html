@@ -51,7 +51,7 @@
         /* Developer Card */
         .developer-card { background: white; border-radius: 30px; padding: 35px; text-align: center; box-shadow: var(--card-shadow); border: none; transition: 0.3s; }
         .developer-card:hover { transform: translateY(-10px); }
-        .dev-img { width: 120px; height: 120px; border-radius: 30px; border: 4px solid #f8f9fa; margin-bottom: 20px; object-fit: cover; }
+        .dev-img { width: 130px; height: 130px; border-radius: 35px; border: 4px solid #f8f9fa; margin-bottom: 20px; object-fit: cover; }
         .social-links a { width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; color: white; margin: 0 5px; text-decoration: none; transition: 0.3s; }
         .social-links a:hover { transform: scale(1.1) rotate(5deg); }
 
@@ -107,11 +107,6 @@
                     </div>
                 </div>
             </div>
-            <div id="user-welcome" class="d-none text-center p-5 bg-white rounded-5 shadow-sm">
-                <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
-                <h3>مرحباً بك في بوابتك الخاصة</h3>
-                <button class="btn btn-primary rounded-pill mt-3" onclick="showTab('pay-form')">ابدأ عملية دفع</button>
-            </div>
         </div>
 
         <div id="pay-form" class="tab-content">
@@ -139,11 +134,13 @@
             <h2 class="fw-bold mb-4">بوابة المطورين</h2>
             <div class="row">
                 <div class="col-md-5">
-                    <div class="card developer-card">
-                        <img src="https://i.ibb.co/h7nrySj/user.png" class="dev-img" alt="Avatar">
+                    <div class="card developer-card shadow">
+                        <img src="0000000.png" class="dev-img mx-auto d-block" alt="Developer Photo">
+                        
                         <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
                         <p class="text-primary fw-bold mb-3">Front-End & Flutter Developer</p>
-                        <div class="social-links">
+                        
+                        <div class="social-links mt-4">
                             <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
                             <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://github.com/buolila" style="background:#000"><i class="fab fa-github"></i></a>
@@ -174,7 +171,6 @@
             if (!isAdmin) {
                 document.getElementById('admin-stats').classList.add('d-none');
                 document.getElementById('admin-link-1').classList.add('d-none');
-                document.getElementById('user-welcome').classList.remove('d-none');
             }
             refreshData();
         }
