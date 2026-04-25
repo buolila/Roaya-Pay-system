@@ -12,195 +12,221 @@
 
     <style>
         :root {
-            --primary-blue: #1e272e;
-            --accent-gold: #ffa801;
-            --sidebar-bg: #2f3542;
-            --light-bg: #f1f2f6;
+            --primary-blue: #303353;
+            --accent-gold: #69624f;
+            --sidebar-bg: #1e272e;
+            --light-bg: #f8f9fa;
         }
 
-        body { font-family: 'Cairo', sans-serif; background-color: var(--light-bg); overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--light-bg); margin: 0; }
 
         /* شاشة تسجيل الدخول */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1e272e 0%, #2f3542 100%);
-            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            background: var(--primary-blue); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
         }
         .login-card {
-            background: white; padding: 40px; border-radius: 20px;
-            width: 90%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: white; padding: 40px; border-radius: 25px;
+            width: 90%; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        /* القائمة الجانبية */
+        /* Sidebar */
         .sidebar {
             background: var(--sidebar-bg); min-height: 100vh; color: white;
             position: fixed; width: 260px; z-index: 1000; display: none;
         }
         .sidebar .nav-link {
-            color: #ced4da; padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #cfd8dc; padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05);
             cursor: pointer; transition: 0.3s;
         }
         .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            background: var(--accent-gold); color: #1e272e; font-weight: bold;
+            background: #283593; color: white; border-right: 5px solid var(--accent-gold);
         }
 
-        /* المحتوى الرئيسي */
+        /* Main Content */
         main { margin-right: 0; padding: 40px; display: none; }
         .main-active { margin-right: 260px; display: block; }
 
-        .stat-card {
-            border: none; border-radius: 15px; padding: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); background: white;
-            border-right: 5px solid var(--accent-gold);
+        /* ----- شكل بطاقات البنوك (Cards) ----- */
+        .stat-card-premium {
+            border: none; border-radius: 20px; padding: 30px;
+            color: white; position: relative; overflow: hidden;
+            transition: 0.3s; cursor: pointer; min-height: 180px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+        .stat-card-premium:hover { transform: translateY(-5px); }
+        
+        .bg-card-blue { background: linear-gradient(135deg, #4834d4 0%, #686de0 100%); }
+        .bg-card-green { background: linear-gradient(135deg, #20bf6b 0%, #26de81 100%); }
+        
+        .stat-card-premium i.icon-bg {
+            position: absolute; left: -10px; bottom: -10px;
+            font-size: 8rem; opacity: 0.15;
+        }
+        .card-number { font-family: monospace; letter-spacing: 2px; font-size: 1.2rem; opacity: 0.8; }
+        
+        /* كارت المطور */
+        .developer-card {
+            text-align: center; padding: 25px; border-radius: 20px;
+            transition: transform 0.3s; background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .dev-img {
+            width: 130px; height: 130px; border-radius: 15px;
+            object-fit: cover; margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .social-links { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .social-links a {
+            width: 38px; height: 38px; display: inline-flex; align-items: center;
+            justify-content: center; border-radius: 50%; color: white; text-decoration: none;
+        }
+        .bg-email { background-color: #FF5722; }
+        .bg-facebook { background-color: #1877f2; }
+        .bg-github { background-color: #000000; }
+        .bg-whatsapp { background-color: #25d366; }
 
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 
 <body>
 
     <div id="login-screen">
-        <div class="login-card">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold text-dark">ROAYA <span style="color: var(--accent-gold);">PAY</span></h2>
-                <p class="text-muted">بوابة تسجيل الدخول للنظام</p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold">اسم المستخدم</label>
-                <input type="text" id="username" class="form-control form-control-lg" placeholder="admin أو user">
-            </div>
-            <div class="mb-4">
-                <label class="form-label fw-bold">كلمة المرور</label>
-                <input type="password" id="password" class="form-control form-control-lg" placeholder="****">
-            </div>
-            <button class="btn btn-warning w-100 py-3 fw-bold text-dark shadow" onclick="handleLogin()">دخول النظام</button>
-            <div id="login-error" class="text-danger small mt-3 text-center d-none">بيانات الدخول غير صحيحة!</div>
+        <div class="login-card text-center">
+            <h3 class="fw-bold text-primary mb-1">ROAYA PAY</h3>
+            <p class="text-muted small mb-4">نظام إدارة الشركات والمدفوعات</p>
+            <input type="text" id="username" class="form-control mb-3" placeholder="اسم المستخدم">
+            <input type="password" id="password" class="form-control mb-4" placeholder="كلمة المرور">
+            <button class="btn btn-primary w-100 py-2 fw-bold" onclick="handleLogin()">دخول</button>
+            <p id="login-error" class="text-danger small mt-2 d-none">بيانات غير صحيحة!</p>
         </div>
     </div>
 
     <div class="sidebar shadow" id="main-sidebar">
         <div class="p-4 text-center">
-            <h4 class="fw-bold text-warning">لوحة التحكم</h4>
-            <div id="user-role-badge" class="badge bg-light text-dark px-3"></div>
+            <h4 class="fw-bold text-warning">التحكم</h4>
+            <span id="role-text" class="badge bg-secondary">مستخدم</span>
         </div>
-        <div class="nav flex-column mt-3">
-            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-chart-line ms-2"></i> الإحصائيات</a>
+        <div class="nav flex-column mt-4">
+            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-home ms-2"></i> الرئيسية</a>
             <a onclick="showTab('inventory')" id="nav-inventory" class="nav-link"><i class="fas fa-boxes ms-2"></i> المخازن</a>
-            <a onclick="showTab('wallet')" id="nav-wallet" class="nav-link"><i class="fas fa-wallet ms-2"></i> المحفظة</a>
             <a onclick="showTab('developers')" class="nav-link"><i class="fas fa-code ms-2"></i> المطورين</a>
-            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-sign-out-alt ms-2"></i> تسجيل خروج</a>
+            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-sign-out-alt ms-2"></i> خروج</a>
         </div>
     </div>
 
     <main id="main-content">
         <div id="home" class="tab-content active">
-            <h2 class="fw-bold mb-4">نظرة عامة</h2>
-            <div class="row g-4" id="admin-stats">
-                <div class="col-md-6">
-                    <div class="stat-card">
-                        <small class="text-muted fw-bold">إجمالي المبيعات (تجريبي)</small>
-                        <h1 class="fw-bold text-primary mt-2">15,400 ج.م</h1>
+            <h2 class="fw-bold mb-5">لوحة المعلومات</h2>
+            
+            <div class="row" id="admin-only-stats">
+                <div class="col-md-6 mb-4">
+                    <div class="stat-card-premium bg-card-blue">
+                        <i class="fas fa-shopping-cart icon-bg"></i>
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h6 class="text-uppercase small fw-bold opacity-75">إجمالي المبيعات</h6>
+                                <h1 class="fw-bold">15,400 ج.م</h1>
+                            </div>
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <div class="card-number mt-4">**** **** **** 2026</div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="stat-card" style="border-right-color: #2ecc71;">
-                        <small class="text-muted fw-bold">الرصيد المتاح</small>
-                        <h1 class="fw-bold text-success mt-2">12,100 ج.م</h1>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="stat-card-premium bg-card-green">
+                        <i class="fas fa-wallet icon-bg"></i>
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h6 class="text-uppercase small fw-bold opacity-75">الرصيد المتاح</h6>
+                                <h1 class="fw-bold">12,100 ج.م</h1>
+                            </div>
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                        <div class="card-number mt-4">ROAYA WALLET ID: 8850</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold">آخر العمليات</h5>
-                    <button class="btn btn-dark btn-sm" onclick="alert('جاري التحميل...')">تحديث البيانات</button>
-                </div>
-                <div class="card border-0 shadow-sm">
-                    <table class="table table-hover mb-0 text-center">
-                        <thead class="table-light">
-                            <tr><th>رقم العملية</th><th>الحالة</th><th>التاريخ</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>#88210</td><td><span class="badge bg-success">ناجحة</span></td><td>2026/04/25</td></tr>
-                            <tr><td>#88209</td><td><span class="badge bg-success">ناجحة</span></td><td>2026/04/24</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+
+            <div id="user-welcome" class="alert alert-light border shadow-sm d-none">
+                مرحباً بك! يمكنك تصفح النظام وإجراء العمليات المسموحة لك.
             </div>
         </div>
 
         <div id="inventory" class="tab-content">
             <h2 class="fw-bold mb-4">إدارة المخازن</h2>
             <div class="card p-4 border-0 shadow-sm">
-                <p>هنا تظهر بيانات المخازن الحساسة والكميات المتوفرة.</p>
-                <div class="alert alert-warning">إجمالي المنتجات في المستودع: 185 قطعة</div>
-            </div>
-        </div>
-
-        <div id="wallet" class="tab-content">
-            <h2 class="fw-bold mb-4">المحفظة المالية</h2>
-            <div class="card p-4 border-0 shadow-sm text-center">
-                <h4 class="text-muted">رصيد السحب الحالي</h4>
-                <h1 class="display-4 fw-bold text-success">12,100 ج.م</h1>
-                <button class="btn btn-success mt-3 px-5">طلب سحب رصيد</button>
+                <h5>المنتجات الحالية</h5>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-6"><p class="mb-0">أجهزة POS</p><h4 class="fw-bold">45</h4></div>
+                    <div class="col-6"><p class="mb-0">بطاقات دفع</p><h4 class="fw-bold">210</h4></div>
+                </div>
             </div>
         </div>
 
         <div id="developers" class="tab-content">
-            <h2 class="fw-bold mb-4">المطور</h2>
-            <div class="stat-card text-center" style="max-width: 400px; margin: auto;">
-                <img src="0000000.png" style="width:120px; border-radius: 50%;" class="mb-3">
-                <h4 class="fw-bold">Abdelrahman Emad</h4>
-                <p class="text-muted">Front-End Developer</p>
+            <h2 class="fw-bold mb-4">بوابة المطورين</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card developer-card shadow-sm h-100">
+                        <img src="0000000.png" class="dev-img mx-auto" alt="Developer">
+                        <h4 class="fw-bold mb-1">Eng / abdelrahman emad abuolila</h4>
+                        <p class="text-muted mb-3 small">Flutter & Front End Developer</p>
+                        <div class="social-links">
+                            <a href="mailto:dev@roayapay.com" class="bg-email"><i class="fas fa-envelope"></i></a>
+                            <a href="https://www.facebook.com/Rooayapay" class="bg-facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://github.com/buolila" class="bg-github"><i class="fab fa-github"></i></a>
+                            <a href="https://wa.me/201100204700" class="bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
         function handleLogin() {
-            const user = document.getElementById('username').value.toLowerCase();
-            const pass = document.getElementById('password').value;
-            const error = document.getElementById('login-error');
-
-            if (user === "admin" && pass === "123") {
-                setupUI(true); // دخول مدير
-            } else if (user === "user" && pass === "000") {
-                setupUI(false); // دخول مستخدم عادي
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            
+            if (u === "admin" && p === "123") {
+                renderUI(true);
+            } else if (u === "user" && p === "000") {
+                renderUI(false);
             } else {
-                error.classList.remove('d-none');
+                document.getElementById('login-error').classList.remove('d-none');
             }
         }
 
-        function setupUI(isAdmin) {
+        function renderUI(isAdmin) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-sidebar').style.display = 'block';
             document.getElementById('main-content').classList.add('main-active');
-
-            const badge = document.getElementById('user-role-badge');
+            
+            const roleBadge = document.getElementById('role-text');
             
             if (isAdmin) {
-                badge.innerText = "مدير النظام";
-                badge.className = "badge bg-danger px-3";
+                roleBadge.innerText = "المدير العام";
+                roleBadge.className = "badge bg-danger";
             } else {
-                badge.innerText = "موظف مبيعات";
-                badge.className = "badge bg-info text-dark px-3";
-                
-                // إخفاء العناصر الحساسة
+                roleBadge.innerText = "موظف";
                 document.getElementById('nav-inventory').style.display = 'none';
-                document.getElementById('nav-wallet').style.display = 'none';
-                document.getElementById('admin-stats').style.display = 'none'; // إخفاء المبالغ الكلية
+                document.getElementById('admin-only-stats').style.display = 'none';
+                document.getElementById('user-welcome').classList.remove('d-none');
             }
         }
 
-        function showTab(tabId) {
+        function showTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            document.getElementById(id).classList.add('active');
+            if(event) event.currentTarget.classList.add('active');
         }
     </script>
 </body>
