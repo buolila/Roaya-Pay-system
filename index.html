@@ -124,6 +124,21 @@
                 <table class="table table-hover text-center mb-0">
                     <thead class="bg-light">
                         <tr><th>#</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th></tr>
+                          function renderTable() {
+        tableBody.innerHTML = '';
+        transactions.forEach((tx, index) => {
+            const isIncome = tx.type === 'income';
+            const row = `<tr>
+                <td style="color: #747d8c;">${tx.date}</td>
+                <td style="font-weight: 600;">${tx.desc}</td>
+                <td><span class="amount-tag ${isIncome ? 'amount-income' : 'amount-expense'}">${isIncome ? '+' : '-'}${formatMoney(tx.amount)}</span></td>
+                <td>${isIncome ? 'إيراد' : 'مصروف'}</td>
+                <td><button class="btn-delete" onclick="deleteTransaction(${index})">حذف 🗑️</button></td>
+            </tr>`;
+            tableBody.insertAdjacentHTML('afterbegin', row); 
+        });
+    }
+
                     </thead>
                     <tbody id="trx-body"></tbody>
                 </table>
