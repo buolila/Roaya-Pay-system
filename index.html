@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>نظام رؤية باي | Roaya  pay   </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام رؤية باي | Roaya Pay</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -74,8 +75,7 @@
     </div>
 
     <div class="sidebar shadow" id="main-sidebar">
-        <div class="sidebar-brand">رؤيه باي<i class<i class="fa-solid fa-globe"></i>
-</div>
+        <div class="sidebar-brand">رؤية باي <i class="fa-solid fa-globe"></i></div>
         <div class="nav flex-column">
             <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-th-large ms-3"></i> الإحصائيات</a>
             <a onclick="showTab('pay-form')" class="nav-link"><i class="fas fa-wallet ms-3"></i> دفع جديد</a>
@@ -98,7 +98,7 @@
                         <h5>إجمالي المبالغ الحقيقية</h5>
                         <h1 class="display-4 fw-bold" id="total-val">0 ج.م</h1>
                     </div>
-                </div>      
+                </div>
                 <div class="col-md-6">
                     <div class="premium-card card-orange">
                         <i class="fas fa-fingerprint card-icon"></i>
@@ -123,22 +123,12 @@
             <div class="card border-0 shadow-sm rounded-5 overflow-hidden">
                 <table class="table table-hover text-center mb-0">
                     <thead class="bg-light">
-                        <tr><th>#</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th></tr>
-                          function renderTable() {
-        tableBody.innerHTML = '';
-        transactions.forEach((tx, index) => {
-            const isIncome = tx.type === 'income';
-            const row = `<tr>
-                <td style="color: #747d8c;">${tx.date}</td>
-                <td style="font-weight: 600;">${tx.desc}</td>
-                <td><span class="amount-tag ${isIncome ? 'amount-income' : 'amount-expense'}">${isIncome ? '+' : '-'}${formatMoney(tx.amount)}</span></td>
-                <td>${isIncome ? 'إيراد' : 'مصروف'}</td>
-                <td><button class="btn-delete" onclick="deleteTransaction(${index})">حذف 🗑️</button></td>
-            </tr>`;
-            tableBody.insertAdjacentHTML('afterbegin', row); 
-        });
-    }
-
+                        <tr>
+                            <th>#</th>
+                            <th>العميل</th>
+                            <th>المبلغ</th>
+                            <th>التاريخ</th>
+                        </tr>
                     </thead>
                     <tbody id="trx-body"></tbody>
                 </table>
@@ -151,10 +141,8 @@
                 <div class="col-md-5">
                     <div class="card developer-card shadow">
                         <img src="0000000.png" class="dev-img mx-auto d-block" alt="Developer Photo">
-                        
                         <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
                         <p class="text-primary fw-bold mb-3">Front-End & Flutter Developer</p>
-                        
                         <div class="social-links mt-4">
                             <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
                             <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
@@ -175,7 +163,9 @@
             const p = document.getElementById('password').value;
             if (u === "admin" && p === "123") initUI(true);
             else if (u === "user" && p === "000") initUI(false);
-            else document.getElementById('error-msg').classList.remove('d-none');
+            else {
+                document.getElementById('error-msg').classList.remove('d-none');
+            }
         }
 
         function initUI(isAdmin) {
@@ -194,7 +184,13 @@
             const n = document.getElementById('c-name').value;
             const a = document.getElementById('c-amount').value;
             if(!n || !a) return alert("اكمل البيانات");
-            db.push({ name: n, amount: parseFloat(a), date: new Date().toLocaleString('ar-EG') });
+            
+            db.push({ 
+                name: n, 
+                amount: parseFloat(a), 
+                date: new Date().toLocaleString('ar-EG') 
+            });
+            
             localStorage.setItem('roaya_pro_db', JSON.stringify(db));
             alert("✅ تم الحفظ");
             document.getElementById('c-name').value = '';
@@ -206,11 +202,19 @@
             let total = 0;
             const body = document.getElementById('trx-body');
             body.innerHTML = '';
+            
             db.forEach((item, index) => {
                 total += item.amount;
-                body.innerHTML += `<tr><td>${index+1}</td><td class="fw-bold">${item.name}</td><td class="text-primary">${item.amount} ج.م</td><td>${item.date}</td></tr>`;
+                body.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td class="fw-bold">${item.name}</td>
+                        <td class="text-primary">${item.amount.toLocaleString()} ج.م</td>
+                        <td>${item.date}</td>
+                    </tr>`;
             });
-            document.getElementById('total-val').innerText = total + " ج.م";
+            
+            document.getElementById('total-val').innerText = total.toLocaleString() + " ج.م";
             document.getElementById('total-count').innerText = db.length;
         }
 
@@ -218,8 +222,15 @@
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(event) event.currentTarget.classList.add('active');
+            
+            // تحديث حالة الزر النشط في القائمة
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
+
+        // تشغيل البيانات عند التحميل إذا كان المستخدم مسجلاً دخوله (اختياري)
+        // refreshData(); 
     </script>
 </body>
 </html>
