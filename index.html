@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدمات البرج | Roaya Tower Services</title>
+    <title>نظام رؤية المتطور | Real-Time System</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -12,9 +12,9 @@
 
     <style>
         :root {
-            --tower-dark: #1e272e;
-            --tower-gold: #ffa801;
-            --tower-blue: #0984e3;
+            --primary-dark: #1e272e;
+            --accent-gold: #ffa801;
+            --success-green: #05c46b;
             --light-bg: #f5f6fa;
         }
 
@@ -23,7 +23,7 @@
         /* شاشة تسجيل الدخول */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--tower-dark) 0%, #2f3542 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #2f3542 100%);
             z-index: 9999; display: flex; align-items: center; justify-content: center;
         }
         .login-card {
@@ -31,9 +31,9 @@
             width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Sidebar */
+        /* القائمة الجانبية */
         .sidebar {
-            background: var(--tower-dark); min-height: 100vh; color: white;
+            background: var(--primary-dark); min-height: 100vh; color: white;
             position: fixed; width: 260px; z-index: 1000; display: none;
         }
         .sidebar .nav-link {
@@ -41,32 +41,24 @@
             cursor: pointer; transition: 0.3s;
         }
         .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            background: var(--tower-gold); color: var(--tower-dark); font-weight: bold;
+            background: var(--accent-gold); color: var(--primary-dark); font-weight: bold;
         }
 
-        /* Main Content */
+        /* المحتوى */
         main { margin-right: 0; padding: 40px; display: none; }
         .main-active { margin-right: 260px; display: block; }
 
-        /* بطاقات الخدمات (Vouchers Style) */
-        .service-card {
-            border: none; border-radius: 20px; padding: 25px;
-            background: white; transition: 0.3s; cursor: pointer;
-            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border-bottom: 5px solid transparent;
+        /* البطاقات الذكية */
+        .stat-card {
+            border: none; border-radius: 20px; padding: 25px; color: white;
+            position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .service-card:hover { transform: translateY(-10px); border-color: var(--tower-gold); }
-        .service-card i { font-size: 3rem; margin-bottom: 15px; color: var(--tower-blue); }
+        .bg-total { background: linear-gradient(45deg, #0984e3, #6c5ce7); }
+        .bg-count { background: linear-gradient(45deg, #00b894, #00cec9); }
 
-        /* كروت المدير (Premium) */
-        .stat-card-tower {
-            border: none; border-radius: 20px; padding: 30px;
-            color: white; position: relative; overflow: hidden;
-            transition: 0.3s; min-height: 150px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .bg-income { background: linear-gradient(135deg, #05c46b 0%, #4bcffa 100%); }
-        .bg-services { background: linear-gradient(135deg, #ffa801 0%, #ff3f34 100%); }
+        /* جدول العمليات */
+        .tr-row { animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
         /* كارت المطور */
         .developer-card {
@@ -74,15 +66,10 @@
             background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         .dev-img { width: 120px; height: 120px; border-radius: 15px; object-fit: cover; margin-bottom: 15px; }
-        
-        .social-links a {
-            width: 35px; height: 35px; display: inline-flex; align-items: center;
-            justify-content: center; border-radius: 50%; color: white; margin: 0 5px;
-        }
+        .social-links a { width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; color: white; margin: 0 5px; text-decoration: none; }
 
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content { display: none; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 
@@ -90,24 +77,22 @@
 
     <div id="login-screen">
         <div class="login-card text-center">
-            <i class="fas fa-tools fa-3x text-warning mb-3"></i>
-            <h3 class="fw-bold mb-1">نظام خدمات البرج</h3>
-            <p class="text-muted small mb-4">تسجيل دخول المستخدمين</p>
-            <input type="text" id="username" class="form-control mb-3 shadow-sm" placeholder="اسم المستخدم">
-            <input type="password" id="password" class="form-control mb-4 shadow-sm" placeholder="كلمة المرور">
-            <button class="btn btn-warning w-100 py-2 fw-bold shadow" onclick="handleLogin()">دخول النظام</button>
-            <p id="login-error" class="text-danger small mt-2 d-none">بيانات الدخول غير صحيحة!</p>
+            <h2 class="fw-bold mb-4">ROAYA <span style="color:var(--accent-gold)">SYSTEM</span></h2>
+            <input type="text" id="username" class="form-control mb-3 py-2" placeholder="اسم المستخدم (admin أو user)">
+            <input type="password" id="password" class="form-control mb-4 py-2" placeholder="كلمة المرور">
+            <button class="btn btn-warning w-100 py-2 fw-bold" onclick="handleLogin()">تسجيل الدخول</button>
         </div>
     </div>
 
     <div class="sidebar shadow" id="main-sidebar">
         <div class="p-4 text-center">
-            <h4 class="fw-bold text-warning">ROAYA SERVICES</h4>
-            <span id="role-text" class="badge bg-light text-dark px-3">بوابة الخدمات</span>
+            <h4 class="fw-bold text-warning">اللوحة الرئيسية</h4>
+            <span id="role-text" class="badge bg-light text-dark"></span>
         </div>
         <div class="nav flex-column mt-4">
-            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-concierge-bell ms-2"></i> الخدمات المتاحة</a>
-            <a onclick="showTab('admin-panel')" id="nav-admin" class="nav-link"><i class="fas fa-tasks ms-2"></i> إدارة البلاغات</a>
+            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-home ms-2"></i> الرئيسية</a>
+            <a onclick="showTab('payment')" id="nav-pay" class="nav-link"><i class="fas fa-credit-card ms-2"></i> عملية دفع حقيقية</a>
+            <a onclick="showTab('history')" id="nav-history" class="nav-link"><i class="fas fa-history ms-2"></i> سجل العمليات</a>
             <a onclick="showTab('developers')" class="nav-link"><i class="fas fa-code ms-2"></i> المطور</a>
             <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-sign-out-alt ms-2"></i> خروج</a>
         </div>
@@ -115,73 +100,64 @@
 
     <main id="main-content">
         <div id="home" class="tab-content active">
-            <h2 class="fw-bold mb-5">خدمات سكان البرج</h2>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="service-card" onclick="requestService('سباكة')">
-                        <i class="fas fa-faucet"></i>
-                        <h5 class="fw-bold">سباكة</h5>
-                        <p class="text-muted small">إصلاح التسريبات والأحواض</p>
+            <h2 class="fw-bold mb-5">مرحباً بك مجدداً</h2>
+            <div class="row g-4" id="admin-charts">
+                <div class="col-md-6">
+                    <div class="stat-card bg-total">
+                        <h6 class="opacity-75">إجمالي التحصيل الحقيقي</h6>
+                        <h1 class="fw-bold" id="total-money">0 ج.م</h1>
+                        <i class="fas fa-money-bill-wave position-absolute" style="left: -10px; bottom: -10px; font-size: 6rem; opacity: 0.2;"></i>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="service-card" onclick="requestService('كهرباء')">
-                        <i class="fas fa-bolt"></i>
-                        <h5 class="fw-bold">كهرباء</h5>
-                        <p class="text-muted small">صيانة التوصيلات والإنارة</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="service-card" onclick="requestService('أسانسير')">
-                        <i class="fas fa-elevator"></i>
-                        <h5 class="fw-bold">أسانسير</h5>
-                        <p class="text-muted small">بلاغات أعطال المصاعد</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="service-card" onclick="requestService('أمن وحراسة')">
-                        <i class="fas fa-shield-alt"></i>
-                        <h5 class="fw-bold">أمن</h5>
-                        <p class="text-muted small">خدمات الأمن والبوابات</p>
+                <div class="col-md-6">
+                    <div class="stat-card bg-count">
+                        <h6 class="opacity-75">عدد العمليات الناجحة</h6>
+                        <h1 class="fw-bold" id="total-count">0 عملية</h1>
+                        <i class="fas fa-check-double position-absolute" style="left: -10px; bottom: -10px; font-size: 6rem; opacity: 0.2;"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="admin-panel" class="tab-content">
-            <h2 class="fw-bold mb-4">إحصائيات وتقارير المدير</h2>
-            <div class="row mb-5">
-                <div class="col-md-6">
-                    <div class="stat-card-tower bg-income">
-                        <i class="fas fa-receipt icon-bg"></i>
-                        <h6 class="fw-bold">رسوم الخدمات المحصلة</h6>
-                        <h1 class="fw-bold">8,500 ج.م</h1>
-                    </div>
+        <div id="payment" class="tab-content">
+            <h2 class="fw-bold mb-4">تنفيذ عملية دفع جديدة</h2>
+            <div class="card p-4 border-0 shadow-sm" style="max-width: 500px;">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">اسم العميل</label>
+                    <input type="text" id="cust-name" class="form-control" placeholder="أدخل الاسم">
                 </div>
-                <div class="col-md-6">
-                    <div class="stat-card-tower bg-services">
-                        <i class="fas fa-tools icon-bg"></i>
-                        <h6 class="fw-bold">طلبات الصيانة المفتوحة</h6>
-                        <h1 class="fw-bold">12 طلب</h1>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">المبلغ</label>
+                    <input type="number" id="cust-amount" class="form-control" placeholder="0.00">
                 </div>
+                <button class="btn btn-primary w-100 py-3 fw-bold" onclick="executePayment()">تأكيد العملية الآن</button>
+            </div>
+        </div>
+
+        <div id="history" class="tab-content">
+            <h2 class="fw-bold mb-4">سجل المعاملات الحقيقي</h2>
+            <div class="card border-0 shadow-sm">
+                <table class="table table-hover text-center mb-0">
+                    <thead class="table-dark">
+                        <tr><th>العميل</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr>
+                    </thead>
+                    <tbody id="real-data-body"></tbody>
+                </table>
             </div>
         </div>
 
         <div id="developers" class="tab-content">
-            <h2 class="fw-bold mb-4">مطور النظام</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card developer-card shadow-sm">
-                        <img src="0000000.png" class="dev-img mx-auto">
-                        <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
-                        <p class="text-muted small mb-3">Front-End & Flutter Developer</p>
-                        <div class="social-links">
-                            <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
-                            <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://github.com/buolila" style="background:#000"><i class="fab fa-github"></i></a>
-                            <a href="https://wa.me/201100204700" style="background:#25d366"><i class="fab fa-whatsapp"></i></a>
-                        </div>
+            <h2 class="fw-bold mb-4">بوابة المطورين</h2>
+            <div class="col-md-4">
+                <div class="card developer-card">
+                    <img src="0000000.png" class="dev-img mx-auto">
+                    <h4 class="fw-bold">Eng / abdelrahman emad</h4>
+                    <p class="text-muted small">Flutter & Front End Developer</p>
+                    <div class="social-links">
+                        <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://github.com/buolila" style="background:#000"><i class="fab fa-github"></i></a>
+                        <a href="https://wa.me/201100204700" style="background:#25d366"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -189,37 +165,71 @@
     </main>
 
     <script>
+        // نظام قاعدة البيانات المحلية (Local Storage)
+        let transactions = JSON.parse(localStorage.getItem('roaya_data')) || [];
+
         function handleLogin() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            
-            if (u === "admin" && p === "123") {
-                renderUI(true);
-            } else if (u === "user" && p === "000") {
-                renderUI(false);
-            } else {
-                document.getElementById('login-error').classList.remove('d-none');
-            }
+            if (u === "admin" && p === "123") renderSystem(true);
+            else if (u === "user" && p === "000") renderSystem(false);
+            else alert("البيانات خاطئة!");
         }
 
-        function renderUI(isAdmin) {
+        function renderSystem(isAdmin) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-sidebar').style.display = 'block';
             document.getElementById('main-content').classList.add('main-active');
+            document.getElementById('role-text').innerText = isAdmin ? "المدير العام" : "مستخدم النظام";
             
-            const roleBadge = document.getElementById('role-text');
-            
-            if (isAdmin) {
-                roleBadge.innerText = "المدير العام";
-                roleBadge.className = "badge bg-danger px-3";
-            } else {
-                roleBadge.innerText = "بوابة الساكن";
-                document.getElementById('nav-admin').style.display = 'none';
+            if (!isAdmin) {
+                document.getElementById('admin-charts').style.display = 'none';
+                document.getElementById('nav-history').style.display = 'none';
             }
+            updateStats();
         }
 
-        function requestService(serviceName) {
-            alert("تم إرسال طلب صيانة (" + serviceName + ") للمدير بنجاح. سيتم التواصل معك قريباً.");
+        function executePayment() {
+            const name = document.getElementById('cust-name').value;
+            const amount = document.getElementById('cust-amount').value;
+
+            if (!name || !amount) return alert("يرجى إكمال البيانات");
+
+            const newTrx = {
+                name: name,
+                amount: parseFloat(amount),
+                date: new Date().toLocaleString('ar-EG'),
+                id: Math.floor(Math.random() * 10000)
+            };
+
+            transactions.push(newTrx);
+            localStorage.setItem('roaya_data', JSON.stringify(transactions));
+            
+            alert("تمت العملية بنجاح! تم تسجيلها في السجل الحقيقي.");
+            document.getElementById('cust-name').value = '';
+            document.getElementById('cust-amount').value = '';
+            updateStats();
+        }
+
+        function updateStats() {
+            let total = 0;
+            const tbody = document.getElementById('real-data-body');
+            tbody.innerHTML = '';
+
+            transactions.forEach(trx => {
+                total += trx.amount;
+                tbody.innerHTML += `
+                    <tr class="tr-row">
+                        <td>${trx.name}</td>
+                        <td class="fw-bold">${trx.amount} ج.م</td>
+                        <td>${trx.date}</td>
+                        <td><span class="badge bg-success">ناجحة</span></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('total-money').innerText = total.toLocaleString() + " ج.م";
+            document.getElementById('total-count').innerText = transactions.length + " عملية";
         }
 
         function showTab(id) {
