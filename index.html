@@ -12,51 +12,50 @@
 
     <style>
         :root {
-            --main-bg: #f8f9fa;
+            --main-bg: #f4f7f6;
             --primary-gradient: linear-gradient(135deg, #1e3799 0%, #0984e3 100%);
             --accent-color: #ffa801;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
-        body { font-family: 'Cairo', sans-serif; background: var(--main-bg); color: #2d3436; overflow-x: hidden; transition: all 0.3s; }
+        body { font-family: 'Cairo', sans-serif; background: var(--main-bg); color: #2d3436; overflow-x: hidden; }
 
         /* Login Screen */
         #login-screen {
             position: fixed; inset: 0; 
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop') center/cover;
             z-index: 9999; display: flex; align-items: center; justify-content: center;
         }
         .login-glass {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; padding: 40px;
-            width: 95%; max-width: 400px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); color: white; text-align: center;
+            width: 95%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); color: white; text-align: center;
         }
 
         /* Sidebar */
         .sidebar {
             background: #ffffff; width: 280px; height: 100vh; position: fixed; right: 0; top: 0;
-            z-index: 1000; display: none; box-shadow: -5px 0 20px rgba(0,0,0,0.03); border-left: 1px solid #eee;
+            z-index: 1000; display: none; box-shadow: -5px 0 25px rgba(0,0,0,0.05);
         }
-        .sidebar-brand { padding: 30px; font-weight: 900; font-size: 1.6rem; color: #1e3799; border-bottom: 1px solid #f8f9fa; }
+        .sidebar-brand { padding: 40px 30px; font-weight: 900; font-size: 1.7rem; color: #1e3799; border-bottom: 1px solid #f0f2f5; }
         .nav-link { padding: 14px 25px; margin: 8px 15px; border-radius: 12px; color: #636e72; font-weight: 600; transition: 0.3s; cursor: pointer; display: flex; align-items: center; }
-        .nav-link i { width: 30px; font-size: 1.1rem; }
-        .nav-link:hover, .nav-link.active { background: var(--primary-gradient); color: white !important; transform: translateX(-5px); }
+        .nav-link i { width: 30px; font-size: 1.2rem; }
+        .nav-link:hover, .nav-link.active { background: var(--primary-gradient); color: white !important; box-shadow: 0 8px 15px rgba(9, 132, 227, 0.2); transform: translateX(-5px); }
 
         /* Main Content */
-        main { margin-right: 280px; padding: 40px; display: none; min-height: 100vh; }
-        .premium-card { border: none; border-radius: 25px; padding: 30px; color: white; position: relative; overflow: hidden; transition: 0.4s; }
+        main { margin-right: 280px; padding: 40px; display: none; transition: 0.3s; }
+        .premium-card { border: none; border-radius: 25px; padding: 30px; color: white; position: relative; overflow: hidden; transition: 0.4s; box-shadow: var(--card-shadow); }
         .card-blue { background: var(--primary-gradient); }
         .card-orange { background: linear-gradient(135deg, #f0932b 0%, #ed4c67 100%); }
-        .card-icon { position: absolute; left: -10px; bottom: -10px; font-size: 7rem; opacity: 0.2; }
+        .card-icon { position: absolute; left: -10px; bottom: -15px; font-size: 7rem; opacity: 0.2; }
 
         /* Developer Card */
         .developer-card { background: white; border-radius: 30px; padding: 40px; text-align: center; box-shadow: var(--card-shadow); border: none; }
-        .dev-img { width: 120px; height: 120px; border-radius: 30px; margin-bottom: 20px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .dev-img { width: 120px; height: 120px; border-radius: 30px; margin-bottom: 20px; object-fit: cover; border: 5px solid #f8f9fa; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         
-        .tab-content { display: none; animation: slideIn 0.4s ease-out; }
+        .tab-content { display: none; animation: slideUp 0.5s ease; }
         .tab-content.active { display: block; }
-        
-        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 992px) {
             .sidebar { width: 80px; }
@@ -70,47 +69,27 @@
 
     <div id="login-screen">
         <div class="login-glass">
-            <div class="mb-4">
-                <i class="fa-solid fa-shield-halved fa-3x mb-3 text-warning"></i>
-                <h2 class="fw-black">ROAYA <span style="color: var(--accent-color);">PRO</span></h2>
-                <small class="opacity-75">Smart Financial Management</small>
+            <h1 class="fw-black mb-1">ROAYA <span style="color: var(--accent-color);">PRO</span></h1>
+            <p class="opacity-75 mb-4">نظام الإدارة والخدمات الذكي</p>
+            <div class="mb-3 text-start">
+                <input type="text" id="username" class="form-control form-control-lg border-0 bg-white" placeholder="اسم المستخدم">
             </div>
-            <div class="text-start">
-                <div class="mb-3">
-                    <label class="small mb-1 opacity-75">اسم المستخدم</label>
-                    <input type="text" id="username" class="form-control form-control-lg border-0 bg-white" placeholder="admin / user">
-                </div>
-                <div class="mb-4">
-                    <label class="small mb-1 opacity-75">كلمة المرور</label>
-                    <input type="password" id="password" class="form-control form-control-lg border-0 bg-white" placeholder="••••••">
-                </div>
+            <div class="mb-4 text-start">
+                <input type="password" id="password" class="form-control form-control-lg border-0 bg-white" placeholder="كلمة المرور">
             </div>
             <button class="btn btn-warning w-100 py-3 fw-bold rounded-3 shadow" onclick="handleLogin()">دخول النظام</button>
-            <p id="error-msg" class="text-danger mt-3 d-none small"><i class="fas fa-exclamation-circle me-1"></i> خطأ في البيانات!</p>
+            <p id="error-msg" class="text-danger mt-3 d-none small">عذراً، تأكد من صحة البيانات!</p>
         </div>
     </div>
 
-    <div class="sidebar" id="main-sidebar">
-        <div class="sidebar-brand">
-            <i class="fa-solid fa-rocket me-2"></i><span>رؤية باي</span>
-        </div>
-        <div class="nav flex-column mt-4">
-            <div onclick="showTab('home', this)" class="nav-link active">
-                <i class="fas fa-chart-line"></i><span>الإحصائيات</span>
-            </div>
-            <div onclick="showTab('pay-form', this)" class="nav-link">
-                <i class="fas fa-plus-circle"></i><span>دفع جديد</span>
-            </div>
-            <div id="admin-link-1" onclick="showTab('history', this)" class="nav-link">
-                <i class="fas fa-history"></i><span>سجل العمليات</span>
-            </div>
-            <div onclick="showTab('dev', this)" class="nav-link">
-                <i class="fas fa-user-shield"></i><span>المطور</span>
-            </div>
-            <hr class="mx-3 opacity-10">
-            <div onclick="location.reload()" class="nav-link text-danger">
-                <i class="fas fa-sign-out-alt"></i><span>خروج</span>
-            </div>
+    <div class="sidebar shadow" id="main-sidebar">
+        <div class="sidebar-brand text-center"><i class="fa-solid fa-bolt-lightning me-2"></i><span>رؤية باي</span></div>
+        <div class="nav flex-column mt-3">
+            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-chart-pie ms-2"></i><span>الإحصائيات</span></a>
+            <a onclick="showTab('pay-form')" class="nav-link"><i class="fas fa-plus-circle ms-2"></i><span>دفع جديد</span></a>
+            <a onclick="showTab('history')" id="admin-link-1" class="nav-link"><i class="fas fa-history ms-2"></i><span>سجل العمليات</span></a>
+            <a onclick="showTab('dev')" class="nav-link"><i class="fas fa-user-gear ms-2"></i><span>المطور</span></a>
+            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-power-off ms-2"></i><span>خروج</span></a>
         </div>
     </div>
 
@@ -118,63 +97,55 @@
         <div id="home" class="tab-content active">
             <div class="d-flex justify-content-between align-items-center mb-5">
                 <div>
-                    <h2 class="fw-bold mb-0">لوحة التحكم</h2>
-                    <p class="text-muted small">مرحباً بك في نظام رؤية المطور</p>
+                    <h2 class="fw-bold mb-0">نظرة عامة</h2>
+                    <p class="text-muted small">مرحباً بك في لوحة تحكم رؤية باي</p>
                 </div>
-                <span id="role-badge" class="badge bg-dark px-3 py-2 rounded-pill"></span>
+                <span id="role-badge" class="badge bg-primary px-3 py-2 rounded-pill"></span>
             </div>
-            
             <div class="row g-4" id="admin-stats">
                 <div class="col-lg-6">
                     <div class="premium-card card-blue">
-                        <i class="fas fa-wallet card-icon"></i>
-                        <p class="mb-1 opacity-75">إجمالي المبالغ المحصلة</p>
-                        <h1 class="display-5 fw-bold" id="total-val">0 ج.م</h1>
+                        <i class="fas fa-coins card-icon"></i>
+                        <h5>إجمالي المبالغ الحقيقية</h5>
+                        <h1 class="display-4 fw-bold" id="total-val">0 ج.م</h1>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="premium-card card-orange">
-                        <i class="fas fa-receipt card-icon"></i>
-                        <p class="mb-1 opacity-75">عدد العمليات الناجحة</p>
-                        <h1 class="display-5 fw-bold" id="total-count">0</h1>
+                        <i class="fas fa-exchange-alt card-icon"></i>
+                        <h5>المعاملات المنجزة</h5>
+                        <h1 class="display-4 fw-bold" id="total-count">0</h1>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="pay-form" class="tab-content">
-            <h3 class="fw-bold mb-4">إنشاء معاملة مالية</h3>
-            <div class="card border-0 shadow-sm rounded-4 p-4 p-lg-5" style="max-width: 600px;">
+            <h2 class="fw-bold mb-4">تنفيذ معاملة جديدة</h2>
+            <div class="card p-5 border-0 shadow-sm rounded-4" style="max-width: 600px;">
                 <div class="mb-3">
                     <label class="form-label fw-bold">اسم العميل</label>
-                    <input type="text" id="c-name" class="form-control form-control-lg bg-light border-0" placeholder="أدخل الاسم الرباعي">
+                    <input type="text" id="c-name" class="form-control form-control-lg bg-light border-0" placeholder="أدخل اسم العميل بالكامل">
                 </div>
                 <div class="mb-4">
-                    <label class="form-label fw-bold">المبلغ المطلوب (EGP)</label>
+                    <label class="form-label fw-bold">المبلغ (EGP)</label>
                     <input type="number" id="c-amount" class="form-control form-control-lg bg-light border-0" placeholder="0.00">
                 </div>
-                <button class="btn btn-primary btn-lg w-100 rounded-3 py-3 shadow-sm" onclick="processNow()">
-                    <i class="fas fa-check-circle me-2"></i>تأكيد وحفظ المعاملة
-                </button>
+                <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold" onclick="processNow()">تأكيد العملية وحفظها</button>
             </div>
         </div>
 
         <div id="history" class="tab-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold">سجل الأرشيف الضريبي</h3>
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="clearData()" id="clear-btn">
-                    <i class="fas fa-trash-alt me-1"></i> مسح السجل
-                </button>
-            </div>
+            <h2 class="fw-bold mb-4">الأرشيف المالي</h2>
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover text-center mb-0">
                         <thead class="bg-light">
                             <tr>
-                                <th class="p-3">الكود</th>
-                                <th>اسم العميل</th>
-                                <th>القيمة</th>
-                                <th>التاريخ والوقت</th>
+                                <th class="py-3">#</th>
+                                <th>العميل</th>
+                                <th>المبلغ</th>
+                                <th>التاريخ</th>
                             </tr>
                         </thead>
                         <tbody id="trx-body"></tbody>
@@ -183,17 +154,19 @@
             </div>
         </div>
 
-        <div id="dev" class="tab-content text-center">
+        <div id="dev" class="tab-content">
+            <h2 class="fw-bold mb-4">بوابة المطور</h2>
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-5">
                     <div class="developer-card">
-                        <img src="https://ui-avatars.com/api/?name=Abdelrahman+Emad&background=1e3799&color=fff&size=128" class="dev-img" alt="Dev">
-                        <h4 class="fw-bold">A. Emad</h4>
-                        <p class="text-primary mb-4">Software Architect</p>
-                        <div class="d-flex justify-content-center gap-2">
-                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-facebook-f text-primary"></i></a>
-                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-whatsapp text-success"></i></a>
-                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-github"></i></a>
+                        <img src="https://ui-avatars.com/api/?name=Abdelrahman+Emad&background=1e3799&color=fff&size=128" class="dev-img mx-auto" alt="Developer">
+                        <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
+                        <p class="text-primary fw-bold">Front-End & Flutter Developer</p>
+                        <div class="social-links mt-4 d-flex justify-content-center">
+                            <a href="mailto:dev@roayapay.com" class="btn btn-danger mx-1"><i class="fas fa-envelope"></i></a>
+                            <a href="#" class="btn btn-primary mx-1"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn btn-dark mx-1"><i class="fab fa-github"></i></a>
+                            <a href="#" class="btn btn-success mx-1"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -203,25 +176,14 @@
 
     <script>
         let db = JSON.parse(localStorage.getItem('roaya_pro_db')) || [];
-        let currentUserRole = '';
-
-        // الدخول باستخدام مفتاح Enter
-        document.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleLogin(); });
 
         function handleLogin() {
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
-            const error = document.getElementById('error-msg');
-
-            if (u === "admin" && p === "123") {
-                currentUserRole = 'admin';
-                initUI(true);
-            } else if (u === "user" && p === "000") {
-                currentUserRole = 'user';
-                initUI(false);
-            } else {
-                error.classList.remove('d-none');
-                setTimeout(() => error.classList.add('d-none'), 3000);
+            if (u === "admin" && p === "123") initUI(true);
+            else if (u === "user" && p === "000") initUI(false);
+            else {
+                document.getElementById('error-msg').classList.remove('d-none');
             }
         }
 
@@ -229,81 +191,60 @@
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-sidebar').style.display = 'block';
             document.getElementById('main-content').style.display = 'block';
-            
-            document.getElementById('role-badge').innerText = isAdmin ? "مدير النظام" : "موظف";
-            
-            // إخفاء الصلاحيات الحساسة عن المستخدم العادي
+            document.getElementById('role-badge').innerText = isAdmin ? "إدارة كاملة" : "حساب موظف";
             if (!isAdmin) {
                 document.getElementById('admin-stats').style.display = 'none';
                 document.getElementById('admin-link-1').style.display = 'none';
-                document.getElementById('clear-btn').style.display = 'none';
             }
-            
             refreshData();
         }
 
         function processNow() {
-            const name = document.getElementById('c-name').value;
-            const amount = document.getElementById('c-amount').value;
-
-            if(!name || !amount) {
-                return alert("يرجى إدخال كافة البيانات المطلوبة");
-            }
-
-            const entry = {
-                name: name,
-                amount: parseFloat(amount),
-                date: new Date().toLocaleString('ar-EG', {hour12: true})
-            };
-
-            db.push(entry);
-            localStorage.setItem('roaya_pro_db', JSON.stringify(db));
+            const n = document.getElementById('c-name').value;
+            const a = document.getElementById('c-amount').value;
+            if(!n || !a) return alert("يرجى ملء كافة الخانات");
             
-            // تنظيف الحقول مع تأثير بسيط
+            db.push({ 
+                name: n, 
+                amount: parseFloat(a), 
+                date: new Date().toLocaleString('ar-EG', { hour12: true }) 
+            });
+            
+            localStorage.setItem('roaya_pro_db', JSON.stringify(db));
+            alert("✅ تم تسجيل المعاملة");
             document.getElementById('c-name').value = '';
             document.getElementById('c-amount').value = '';
-            
-            alert("✅ تم تسجيل المعاملة بنجاح");
             refreshData();
         }
 
         function refreshData() {
+            let total = 0;
             const body = document.getElementById('trx-body');
-            const totalValEl = document.getElementById('total-val');
-            const totalCountEl = document.getElementById('total-count');
-            
-            let totalSum = 0;
             body.innerHTML = '';
-
+            
             db.forEach((item, index) => {
-                totalSum += item.amount;
+                total += item.amount;
                 body.innerHTML += `
                     <tr>
-                        <td class="p-3 text-muted">#${index + 101}</td>
+                        <td class="py-3 text-muted">#${index + 1}</td>
                         <td class="fw-bold">${item.name}</td>
-                        <td><span class="badge bg-light text-primary fs-6">${item.amount.toLocaleString()} ج.م</span></td>
+                        <td class="text-primary fw-bold">${item.amount.toLocaleString()} ج.م</td>
                         <td class="small text-muted">${item.date}</td>
                     </tr>`;
             });
-
-            totalValEl.innerText = `${totalSum.toLocaleString()} ج.م`;
-            totalCountEl.innerText = db.length;
+            
+            document.getElementById('total-val').innerText = total.toLocaleString() + " ج.م";
+            document.getElementById('total-count').innerText = db.length;
         }
 
-        function clearData() {
-            if(confirm("هل أنت متأكد من مسح جميع السجلات؟ لا يمكن التراجع!")) {
-                db = [];
-                localStorage.removeItem('roaya_pro_db');
-                refreshData();
-            }
-        }
-
-        function showTab(id, element) {
+        function showTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            
             document.getElementById(id).classList.add('active');
-            if(element) element.classList.add('active');
+            
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
     </script>
 </body>
