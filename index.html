@@ -1,10 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام رؤية باي | Roaya Pay</title>
+    <title>نظام رؤية باي | Roaya Pay Pro</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -12,52 +12,57 @@
 
     <style>
         :root {
-            --main-bg: #f0f2f5;
+            --main-bg: #f8f9fa;
             --primary-gradient: linear-gradient(135deg, #1e3799 0%, #0984e3 100%);
             --accent-color: #ffa801;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        body { font-family: 'Cairo', sans-serif; background: var(--main-bg); color: #2d3436; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background: var(--main-bg); color: #2d3436; overflow-x: hidden; transition: all 0.3s; }
 
         /* Login Screen */
         #login-screen {
             position: fixed; inset: 0; 
-            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop') center/cover;
             z-index: 9999; display: flex; align-items: center; justify-content: center;
         }
         .login-glass {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 30px; padding: 50px;
-            width: 90%; max-width: 450px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); color: white; text-align: center;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; padding: 40px;
+            width: 95%; max-width: 400px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); color: white; text-align: center;
         }
 
         /* Sidebar */
         .sidebar {
-            background: #ffffff; width: 280px; min-height: 100vh; position: fixed; right: 0; top: 0;
-            z-index: 1000; display: none; box-shadow: -5px 0 20px rgba(0,0,0,0.03);
+            background: #ffffff; width: 280px; height: 100vh; position: fixed; right: 0; top: 0;
+            z-index: 1000; display: none; box-shadow: -5px 0 20px rgba(0,0,0,0.03); border-left: 1px solid #eee;
         }
-        .sidebar-brand { padding: 40px 30px; font-weight: 900; font-size: 1.5rem; color: #1e3799; }
-        .nav-link { padding: 15px 30px; margin: 5px 15px; border-radius: 15px; color: #636e72; font-weight: 600; transition: 0.4s; cursor: pointer; }
-        .nav-link:hover, .nav-link.active { background: var(--primary-gradient); color: white !important; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3); }
+        .sidebar-brand { padding: 30px; font-weight: 900; font-size: 1.6rem; color: #1e3799; border-bottom: 1px solid #f8f9fa; }
+        .nav-link { padding: 14px 25px; margin: 8px 15px; border-radius: 12px; color: #636e72; font-weight: 600; transition: 0.3s; cursor: pointer; display: flex; align-items: center; }
+        .nav-link i { width: 30px; font-size: 1.1rem; }
+        .nav-link:hover, .nav-link.active { background: var(--primary-gradient); color: white !important; transform: translateX(-5px); }
 
         /* Main Content */
-        main { margin-right: 280px; padding: 50px; display: none; }
-        .premium-card { border: none; border-radius: 25px; padding: 35px; color: white; position: relative; overflow: hidden; transition: 0.4s; height: 100%; }
-        .card-blue { background: linear-gradient(135deg, #1e3799 0%, #0984e3 100%); }
+        main { margin-right: 280px; padding: 40px; display: none; min-height: 100vh; }
+        .premium-card { border: none; border-radius: 25px; padding: 30px; color: white; position: relative; overflow: hidden; transition: 0.4s; }
+        .card-blue { background: var(--primary-gradient); }
         .card-orange { background: linear-gradient(135deg, #f0932b 0%, #ed4c67 100%); }
-        .card-icon { position: absolute; left: -20px; bottom: -20px; font-size: 8rem; opacity: 0.15; }
+        .card-icon { position: absolute; left: -10px; bottom: -10px; font-size: 7rem; opacity: 0.2; }
 
         /* Developer Card */
-        .developer-card { background: white; border-radius: 30px; padding: 35px; text-align: center; box-shadow: var(--card-shadow); border: none; transition: 0.3s; }
-        .developer-card:hover { transform: translateY(-10px); }
-        .dev-img { width: 130px; height: 130px; border-radius: 35px; border: 4px solid #f8f9fa; margin-bottom: 20px; object-fit: cover; }
-        .social-links a { width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; color: white; margin: 0 5px; text-decoration: none; transition: 0.3s; }
-        .social-links a:hover { transform: scale(1.1) rotate(5deg); }
-
-        .tab-content { display: none; animation: fadeIn 0.6s ease; }
+        .developer-card { background: white; border-radius: 30px; padding: 40px; text-align: center; box-shadow: var(--card-shadow); border: none; }
+        .dev-img { width: 120px; height: 120px; border-radius: 30px; margin-bottom: 20px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
+        .tab-content { display: none; animation: slideIn 0.4s ease-out; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; }
+            .sidebar-brand span, .nav-link span { display: none; }
+            main { margin-right: 80px; padding: 20px; }
+        }
     </style>
 </head>
 
@@ -65,89 +70,130 @@
 
     <div id="login-screen">
         <div class="login-glass">
-            <h1 class="fw-black mb-1">ROAYA <span style="color: var(--accent-color);">PRO</span></h1>
-            <p class="opacity-75 mb-4">نظام الإدارة والخدمات الذكي</p>
-            <input type="text" id="username" class="form-control form-control-lg border-0 mb-3 bg-white" placeholder="اسم المستخدم">
-            <input type="password" id="password" class="form-control form-control-lg border-0 mb-4 bg-white" placeholder="كلمة المرور">
-            <button class="btn btn-warning w-100 py-3 fw-bold rounded-pill shadow-lg" onclick="handleLogin()">دخول النظام</button>
-            <p id="error-msg" class="text-danger mt-3 d-none">بيانات الدخول غير صحيحة!</p>
+            <div class="mb-4">
+                <i class="fa-solid fa-shield-halved fa-3x mb-3 text-warning"></i>
+                <h2 class="fw-black">ROAYA <span style="color: var(--accent-color);">PRO</span></h2>
+                <small class="opacity-75">Smart Financial Management</small>
+            </div>
+            <div class="text-start">
+                <div class="mb-3">
+                    <label class="small mb-1 opacity-75">اسم المستخدم</label>
+                    <input type="text" id="username" class="form-control form-control-lg border-0 bg-white" placeholder="admin / user">
+                </div>
+                <div class="mb-4">
+                    <label class="small mb-1 opacity-75">كلمة المرور</label>
+                    <input type="password" id="password" class="form-control form-control-lg border-0 bg-white" placeholder="••••••">
+                </div>
+            </div>
+            <button class="btn btn-warning w-100 py-3 fw-bold rounded-3 shadow" onclick="handleLogin()">دخول النظام</button>
+            <p id="error-msg" class="text-danger mt-3 d-none small"><i class="fas fa-exclamation-circle me-1"></i> خطأ في البيانات!</p>
         </div>
     </div>
 
-    <div class="sidebar shadow" id="main-sidebar">
-        <div class="sidebar-brand">رؤية باي <i class="fa-solid fa-globe"></i></div>
-        <div class="nav flex-column">
-            <a onclick="showTab('home')" class="nav-link active"><i class="fas fa-th-large ms-3"></i> الإحصائيات</a>
-            <a onclick="showTab('pay-form')" class="nav-link"><i class="fas fa-wallet ms-3"></i> دفع جديد</a>
-            <a onclick="showTab('history')" id="admin-link-1" class="nav-link"><i class="fas fa-list-ul ms-3"></i> سجل العمليات</a>
-            <a onclick="showTab('dev')" class="nav-link"><i class="fas fa-code ms-3"></i> المطور</a>
-            <a onclick="location.reload()" class="nav-link text-danger mt-5"><i class="fas fa-power-off ms-3"></i> خروج</a>
+    <div class="sidebar" id="main-sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-rocket me-2"></i><span>رؤية باي</span>
+        </div>
+        <div class="nav flex-column mt-4">
+            <div onclick="showTab('home', this)" class="nav-link active">
+                <i class="fas fa-chart-line"></i><span>الإحصائيات</span>
+            </div>
+            <div onclick="showTab('pay-form', this)" class="nav-link">
+                <i class="fas fa-plus-circle"></i><span>دفع جديد</span>
+            </div>
+            <div id="admin-link-1" onclick="showTab('history', this)" class="nav-link">
+                <i class="fas fa-history"></i><span>سجل العمليات</span>
+            </div>
+            <div onclick="showTab('dev', this)" class="nav-link">
+                <i class="fas fa-user-shield"></i><span>المطور</span>
+            </div>
+            <hr class="mx-3 opacity-10">
+            <div onclick="location.reload()" class="nav-link text-danger">
+                <i class="fas fa-sign-out-alt"></i><span>خروج</span>
+            </div>
         </div>
     </div>
 
     <main id="main-content">
         <div id="home" class="tab-content active">
             <div class="d-flex justify-content-between align-items-center mb-5">
-                <h2 class="fw-bold">نظرة عامة على النشاط</h2>
-                <span id="role-badge" class="badge bg-primary px-4 py-2 rounded-pill"></span>
+                <div>
+                    <h2 class="fw-bold mb-0">لوحة التحكم</h2>
+                    <p class="text-muted small">مرحباً بك في نظام رؤية المطور</p>
+                </div>
+                <span id="role-badge" class="badge bg-dark px-3 py-2 rounded-pill"></span>
             </div>
+            
             <div class="row g-4" id="admin-stats">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <div class="premium-card card-blue">
-                        <i class="fas fa-chart-pie card-icon"></i>
-                        <h5>إجمالي المبالغ الحقيقية</h5>
-                        <h1 class="display-4 fw-bold" id="total-val">0 ج.م</h1>
+                        <i class="fas fa-wallet card-icon"></i>
+                        <p class="mb-1 opacity-75">إجمالي المبالغ المحصلة</p>
+                        <h1 class="display-5 fw-bold" id="total-val">0 ج.م</h1>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <div class="premium-card card-orange">
-                        <i class="fas fa-fingerprint card-icon"></i>
-                        <h5>المعاملات المنجزة</h5>
-                        <h1 class="display-4 fw-bold" id="total-count">0</h1>
+                        <i class="fas fa-receipt card-icon"></i>
+                        <p class="mb-1 opacity-75">عدد العمليات الناجحة</p>
+                        <h1 class="display-5 fw-bold" id="total-count">0</h1>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="pay-form" class="tab-content">
-            <h2 class="fw-bold mb-4">تنفيذ معاملة جديدة</h2>
-            <div class="card p-5 border-0 shadow-sm rounded-5" style="max-width: 500px;">
-                <input type="text" id="c-name" class="form-control mb-3 py-2 bg-light" placeholder="اسم العميل">
-                <input type="number" id="c-amount" class="form-control mb-4 py-2 bg-light" placeholder="المبلغ">
-                <button class="btn btn-primary w-100 py-3 rounded-pill" onclick="processNow()">تأكيد العملية</button>
+            <h3 class="fw-bold mb-4">إنشاء معاملة مالية</h3>
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-lg-5" style="max-width: 600px;">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">اسم العميل</label>
+                    <input type="text" id="c-name" class="form-control form-control-lg bg-light border-0" placeholder="أدخل الاسم الرباعي">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">المبلغ المطلوب (EGP)</label>
+                    <input type="number" id="c-amount" class="form-control form-control-lg bg-light border-0" placeholder="0.00">
+                </div>
+                <button class="btn btn-primary btn-lg w-100 rounded-3 py-3 shadow-sm" onclick="processNow()">
+                    <i class="fas fa-check-circle me-2"></i>تأكيد وحفظ المعاملة
+                </button>
             </div>
         </div>
 
         <div id="history" class="tab-content">
-            <h2 class="fw-bold mb-4">الأرشيف المالي</h2>
-            <div class="card border-0 shadow-sm rounded-5 overflow-hidden">
-                <table class="table table-hover text-center mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>#</th>
-                            <th>العميل</th>
-                            <th>المبلغ</th>
-                            <th>التاريخ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="trx-body"></tbody>
-                </table>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold">سجل الأرشيف الضريبي</h3>
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="clearData()" id="clear-btn">
+                    <i class="fas fa-trash-alt me-1"></i> مسح السجل
+                </button>
+            </div>
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="p-3">الكود</th>
+                                <th>اسم العميل</th>
+                                <th>القيمة</th>
+                                <th>التاريخ والوقت</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trx-body"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div id="dev" class="tab-content">
-            <h2 class="fw-bold mb-4">بوابة المطورين</h2>
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="card developer-card shadow">
-                        <img src="0000000.png" class="dev-img mx-auto d-block" alt="Developer Photo">
-                        <h4 class="fw-bold mb-1">Eng / abdelrahman emad</h4>
-                        <p class="text-primary fw-bold mb-3">Front-End & Flutter Developer</p>
-                        <div class="social-links mt-4">
-                            <a href="mailto:dev@roayapay.com" style="background:#FF5722"><i class="fas fa-envelope"></i></a>
-                            <a href="https://www.facebook.com/Rooayapay" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://github.com/buolila" style="background:#000"><i class="fab fa-github"></i></a>
-                            <a href="https://wa.me/201100204700" style="background:#25d366"><i class="fab fa-whatsapp"></i></a>
+        <div id="dev" class="tab-content text-center">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="developer-card">
+                        <img src="https://ui-avatars.com/api/?name=Abdelrahman+Emad&background=1e3799&color=fff&size=128" class="dev-img" alt="Dev">
+                        <h4 class="fw-bold">A. Emad</h4>
+                        <p class="text-primary mb-4">Software Architect</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-facebook-f text-primary"></i></a>
+                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-whatsapp text-success"></i></a>
+                            <a href="#" class="btn btn-light rounded-circle shadow-sm"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
@@ -157,14 +203,25 @@
 
     <script>
         let db = JSON.parse(localStorage.getItem('roaya_pro_db')) || [];
+        let currentUserRole = '';
+
+        // الدخول باستخدام مفتاح Enter
+        document.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleLogin(); });
 
         function handleLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            if (u === "admin" && p === "123") initUI(true);
-            else if (u === "user" && p === "000") initUI(false);
-            else {
-                document.getElementById('error-msg').classList.remove('d-none');
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
+            const error = document.getElementById('error-msg');
+
+            if (u === "admin" && p === "123") {
+                currentUserRole = 'admin';
+                initUI(true);
+            } else if (u === "user" && p === "000") {
+                currentUserRole = 'user';
+                initUI(false);
+            } else {
+                error.classList.remove('d-none');
+                setTimeout(() => error.classList.add('d-none'), 3000);
             }
         }
 
@@ -172,65 +229,82 @@
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-sidebar').style.display = 'block';
             document.getElementById('main-content').style.display = 'block';
-            document.getElementById('role-badge').innerText = isAdmin ? "إدارة كاملة" : "حساب مستخدم";
+            
+            document.getElementById('role-badge').innerText = isAdmin ? "مدير النظام" : "موظف";
+            
+            // إخفاء الصلاحيات الحساسة عن المستخدم العادي
             if (!isAdmin) {
-                document.getElementById('admin-stats').classList.add('d-none');
-                document.getElementById('admin-link-1').classList.add('d-none');
+                document.getElementById('admin-stats').style.display = 'none';
+                document.getElementById('admin-link-1').style.display = 'none';
+                document.getElementById('clear-btn').style.display = 'none';
             }
+            
             refreshData();
         }
 
         function processNow() {
-            const n = document.getElementById('c-name').value;
-            const a = document.getElementById('c-amount').value;
-            if(!n || !a) return alert("اكمل البيانات");
-            
-            db.push({ 
-                name: n, 
-                amount: parseFloat(a), 
-                date: new Date().toLocaleString('ar-EG') 
-            });
-            
+            const name = document.getElementById('c-name').value;
+            const amount = document.getElementById('c-amount').value;
+
+            if(!name || !amount) {
+                return alert("يرجى إدخال كافة البيانات المطلوبة");
+            }
+
+            const entry = {
+                name: name,
+                amount: parseFloat(amount),
+                date: new Date().toLocaleString('ar-EG', {hour12: true})
+            };
+
+            db.push(entry);
             localStorage.setItem('roaya_pro_db', JSON.stringify(db));
-            alert("✅ تم الحفظ");
+            
+            // تنظيف الحقول مع تأثير بسيط
             document.getElementById('c-name').value = '';
             document.getElementById('c-amount').value = '';
+            
+            alert("✅ تم تسجيل المعاملة بنجاح");
             refreshData();
         }
 
         function refreshData() {
-            let total = 0;
             const body = document.getElementById('trx-body');
-            body.innerHTML = '';
+            const totalValEl = document.getElementById('total-val');
+            const totalCountEl = document.getElementById('total-count');
             
+            let totalSum = 0;
+            body.innerHTML = '';
+
             db.forEach((item, index) => {
-                total += item.amount;
+                totalSum += item.amount;
                 body.innerHTML += `
                     <tr>
-                        <td>${index + 1}</td>
+                        <td class="p-3 text-muted">#${index + 101}</td>
                         <td class="fw-bold">${item.name}</td>
-                        <td class="text-primary">${item.amount.toLocaleString()} ج.م</td>
-                        <td>${item.date}</td>
+                        <td><span class="badge bg-light text-primary fs-6">${item.amount.toLocaleString()} ج.م</span></td>
+                        <td class="small text-muted">${item.date}</td>
                     </tr>`;
             });
-            
-            document.getElementById('total-val').innerText = total.toLocaleString() + " ج.م";
-            document.getElementById('total-count').innerText = db.length;
+
+            totalValEl.innerText = `${totalSum.toLocaleString()} ج.م`;
+            totalCountEl.innerText = db.length;
         }
 
-        function showTab(id) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            
-            // تحديث حالة الزر النشط في القائمة
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+        function clearData() {
+            if(confirm("هل أنت متأكد من مسح جميع السجلات؟ لا يمكن التراجع!")) {
+                db = [];
+                localStorage.removeItem('roaya_pro_db');
+                refreshData();
             }
         }
 
-        // تشغيل البيانات عند التحميل إذا كان المستخدم مسجلاً دخوله (اختياري)
-        // refreshData(); 
+        function showTab(id, element) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            document.getElementById(id).classList.add('active');
+            if(element) element.classList.add('active');
+        }
     </script>
 </body>
 </html>
